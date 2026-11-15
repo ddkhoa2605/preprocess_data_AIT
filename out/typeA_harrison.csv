@@ -1,0 +1,42 @@
+time_label,name,n
+dnsteal,Wazuh: Dovecot Authentication Success.,896
+dnsteal,Suricata: Alert - SURICATA TLS invalid handshake message,466
+dnsteal,Suricata: Alert - SURICATA TLS invalid record/traffic,466
+cracking,Wazuh: Dovecot Authentication Success.,230
+service_scans,Suricata: Alert - SURICATA TLS invalid record/traffic,107
+service_scans,Suricata: Alert - SURICATA TLS invalid handshake message,106
+dirb,Suricata: Alert - SURICATA TLS invalid record/traffic,92
+dirb,Suricata: Alert - SURICATA TLS invalid handshake message,92
+dirb,Wazuh: Dovecot Authentication Success.,76
+cracking,Suricata: Alert - SURICATA TLS invalid handshake message,72
+cracking,Suricata: Alert - SURICATA TLS invalid record/traffic,72
+service_scans,Wazuh: Dovecot Authentication Success.,50
+network_scans,Wazuh: Dovecot Authentication Success.,48
+privilege_escalation,Wazuh: Dovecot Authentication Success.,16
+dnsteal,Wazuh: ClamAV database update,16
+network_scans,Suricata: Alert - SURICATA TLS invalid handshake message,16
+network_scans,Suricata: Alert - SURICATA TLS invalid record/traffic,16
+service_scans,Wazuh: Apache: Attempt to access forbidden file or directory.,12
+service_scans,Wazuh: Web server 400 error code.,12
+webshell,Wazuh: Dovecot Authentication Success.,10
+cracking,Suricata: Alert - ET INFO Observed DNS Query to .cloud TLD,7
+wpscan,Wazuh: Dovecot Authentication Success.,6
+dirb,Wazuh: ClamAV database update,6
+dnsteal,Wazuh: CMS (WordPress or Joomla) login attempt.,4
+cracking,Wazuh: CMS (WordPress or Joomla) login attempt.,2
+dirb,Wazuh: CMS (WordPress or Joomla) login attempt.,2
+cracking,Wazuh: ClamAV database update,2
+webshell,Suricata: Alert - SURICATA TLS invalid record/traffic,2
+reverse_shell,Suricata: Alert - SURICATA TLS invalid handshake message,2
+dnsteal,Wazuh: Dovecot Invalid User Login Attempt.,2
+service_scans,Wazuh: ClamAV database update,2
+dnsteal,Wazuh: syslog: User authentication failure.,2
+reverse_shell,Suricata: Alert - SURICATA TLS invalid record/traffic,2
+wpscan,Suricata: Alert - SURICATA TLS invalid handshake message,2
+webshell,Suricata: Alert - SURICATA TLS invalid handshake message,2
+reverse_shell,Wazuh: Dovecot Authentication Success.,2
+service_scans,Wazuh: sshd: insecure connection attempt (scan).,2
+wpscan,Suricata: Alert - SURICATA TLS invalid record/traffic,2
+dnsteal,Suricata: Alert - ET INFO Observed DNS Query to .cloud TLD,1
+dnsteal,Wazuh: PAM: User login failed.,1
+service_scans,Suricata: Alert - SURICATA TLS invalid record type,1

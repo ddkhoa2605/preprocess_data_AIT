@@ -1,0 +1,27 @@
+time_label,name,n
+dnsteal,Wazuh: Dovecot Authentication Success.,224
+dirb,Wazuh: Dovecot Authentication Success.,144
+cracking,Wazuh: Dovecot Authentication Success.,108
+cracking,Suricata: Alert - SURICATA TLS invalid handshake message,94
+cracking,Suricata: Alert - SURICATA TLS invalid record/traffic,94
+network_scans,Wazuh: Dovecot Authentication Success.,82
+network_scans,Suricata: Alert - SURICATA TLS invalid handshake message,50
+network_scans,Suricata: Alert - SURICATA TLS invalid record/traffic,50
+service_scans,Wazuh: Web server 400 error code.,31
+service_scans,Wazuh: Apache: Attempt to access forbidden file or directory.,24
+dnsteal,Wazuh: ClamAV database update,10
+wpscan,Wazuh: Dovecot Authentication Success.,8
+dnsteal,Suricata: Alert - SURICATA TLS invalid record/traffic,8
+dnsteal,Suricata: Alert - SURICATA TLS invalid handshake message,8
+service_scans,Wazuh: sshd: insecure connection attempt (scan).,7
+cracking,Wazuh: ClamAV database update,6
+service_scans,Wazuh: Dovecot Authentication Success.,4
+dirb,Wazuh: ClamAV database update,4
+cracking,Wazuh: Dovecot Invalid User Login Attempt.,2
+dirb,Suricata: Alert - SURICATA TLS invalid record/traffic,2
+cracking,Wazuh: syslog: User authentication failure.,2
+dirb,Suricata: Alert - SURICATA TLS invalid handshake message,2
+service_scans,Wazuh: Multiple web server 400 error codes from same source ip.,2
+cracking,Wazuh: PAM: User login failed.,1
+dnsteal,Wazuh: CMS (WordPress or Joomla) login attempt.,1
+dnsteal,Suricata: Alert - ET INFO Observed DNS Query to .cloud TLD,1

@@ -1,0 +1,16 @@
+time_label,name,n
+dnsteal,Wazuh: Dovecot Authentication Success.,250
+dnsteal,Suricata: Alert - SURICATA TLS invalid record/traffic,82
+dnsteal,Suricata: Alert - SURICATA TLS invalid handshake message,82
+service_scans,Wazuh: Web server 400 error code.,37
+service_scans,Wazuh: Apache: Attempt to access forbidden file or directory.,24
+service_scans,Wazuh: sshd: insecure connection attempt (scan).,10
+dnsteal,Wazuh: ClamAV database update,8
+cracking,Wazuh: ClamAV database update,8
+network_scans,Wazuh: ClamAV database update,8
+service_scans,Wazuh: Multiple web server 400 error codes from same source ip.,2
+cracking,Suricata: Alert - SURICATA HTTP unable to match response to request,1
+webshell,Suricata: Alert - SURICATA TLS invalid record type,1
+webshell,Suricata: Alert - SURICATA TLS invalid record/traffic,1
+wpscan,Suricata: Alert - SURICATA TLS invalid record type,1
+wpscan,Suricata: Alert - SURICATA TLS invalid record/traffic,1

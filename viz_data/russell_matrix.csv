@@ -1,0 +1,4 @@
+scope,both_attack,type_a,type_b,both_benign
+Cả 3 IDS (có AMiner),10958,1057,4,33525
+"_wazuh.json, chưa khử trùng",7683,854,0,32951
+"_wazuh.json, đã khử trùng",7683,516,0,19259

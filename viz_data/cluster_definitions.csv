@@ -1,0 +1,7 @@
+definition,combo_min,combo_max
+"rule + host + src_ip, lặng 5 phút",52,75
+"rule + host + src_ip, lặng 30 phút",51,73
+"rule + host + src_ip, không tách",51,73
+"rule + host, lặng 30 phút",46,59
+"host + src_ip, lặng 30 phút",18,39
+"chỉ src_ip, lặng 30 phút",9,18

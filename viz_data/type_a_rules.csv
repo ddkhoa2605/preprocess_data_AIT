@@ -1,0 +1,63 @@
+scenario,rule,alerts,verdict
+fox,Wazuh: Dovecot Authentication Success.,570,Nhiễu nền
+fox,Suricata: Alert - SURICATA TLS invalid record/traffic,154,Nhiễu nền
+fox,Suricata: Alert - SURICATA TLS invalid handshake message,154,Nhiễu nền
+fox,Wazuh: Web server 400 error code.,31,Tấn công bị bỏ sót (Nmap)
+fox,Wazuh: Apache: Attempt to access forbidden file or directory.,24,Tấn công bị bỏ sót (Nmap)
+fox,Wazuh: ClamAV database update,20,Nhiễu nền
+fox,Wazuh: sshd: insecure connection attempt (scan).,7,Nhiễu nền
+fox,Wazuh: Multiple web server 400 error codes from same source ip.,2,Tấn công bị bỏ sót (Nmap)
+harrison,Wazuh: Dovecot Authentication Success.,1334,Nhiễu nền
+harrison,Suricata: Alert - SURICATA TLS invalid record/traffic,759,Nhiễu nền
+harrison,Suricata: Alert - SURICATA TLS invalid handshake message,758,Nhiễu nền
+harrison,Wazuh: ClamAV database update,26,Nhiễu nền
+harrison,Wazuh: Apache: Attempt to access forbidden file or directory.,12,Tấn công bị bỏ sót (Nmap)
+harrison,Wazuh: Web server 400 error code.,12,Tấn công bị bỏ sót (Nmap)
+harrison,Suricata: Alert - ET INFO Observed DNS Query to .cloud TLD,8,Nhiễu nền
+harrison,Wazuh: CMS (WordPress or Joomla) login attempt.,8,Nhiễu nền
+russellmitchell,Wazuh: Dovecot Authentication Success.,250,Nhiễu nền
+russellmitchell,Suricata: Alert - SURICATA TLS invalid record/traffic,84,Nhiễu nền
+russellmitchell,Suricata: Alert - SURICATA TLS invalid handshake message,82,Nhiễu nền
+russellmitchell,Wazuh: Web server 400 error code.,37,Tấn công bị bỏ sót (Nmap)
+russellmitchell,Wazuh: ClamAV database update,24,Nhiễu nền
+russellmitchell,Wazuh: Apache: Attempt to access forbidden file or directory.,24,Tấn công bị bỏ sót (Nmap)
+russellmitchell,Wazuh: sshd: insecure connection attempt (scan).,10,Nhiễu nền
+russellmitchell,Suricata: Alert - SURICATA TLS invalid record type,2,Nhiễu nền
+santos,Wazuh: Dovecot Authentication Success.,638,Nhiễu nền
+santos,Suricata: Alert - SURICATA TLS invalid record/traffic,188,Nhiễu nền
+santos,Suricata: Alert - SURICATA TLS invalid handshake message,186,Nhiễu nền
+santos,Wazuh: ClamAV database update,16,Nhiễu nền
+santos,Suricata: Alert - ET POLICY GNU/Linux APT User-Agent Outbound likely related to package management,10,Nhiễu nền
+santos,Wazuh: Web server 400 error code.,8,Tấn công bị bỏ sót (Nmap)
+santos,Wazuh: sshd: insecure connection attempt (scan).,5,Nhiễu nền
+santos,Wazuh: syslog: User authentication failure.,4,Nhiễu nền
+shaw,Wazuh: Dovecot Authentication Success.,230,Nhiễu nền
+shaw,Suricata: Alert - SURICATA TLS invalid handshake message,102,Nhiễu nền
+shaw,Suricata: Alert - SURICATA TLS invalid record/traffic,102,Nhiễu nền
+shaw,Wazuh: ClamAV database update,12,Nhiễu nền
+shaw,Wazuh: Web server 400 error code.,2,Nhiễu nền
+shaw,Wazuh: sshd: insecure connection attempt (scan).,1,Nhiễu nền
+wardbeck,Wazuh: Dovecot Authentication Success.,268,Nhiễu nền
+wardbeck,Suricata: Alert - SURICATA TLS invalid record/traffic,90,Nhiễu nền
+wardbeck,Suricata: Alert - SURICATA TLS invalid handshake message,88,Nhiễu nền
+wardbeck,Wazuh: ClamAV database update,18,Nhiễu nền
+wardbeck,Suricata: Alert - ET POLICY GNU/Linux APT User-Agent Outbound likely related to package management,10,Nhiễu nền
+wardbeck,Wazuh: Web server 400 error code.,9,Tấn công bị bỏ sót (Nmap)
+wardbeck,Wazuh: sshd: insecure connection attempt (scan).,4,Nhiễu nền
+wardbeck,Suricata: Alert - SURICATA TLS invalid record type,2,Nhiễu nền
+wheeler,Suricata: Alert - ET INFO Observed DNS Query to .biz TLD,311,Nhiễu nền
+wheeler,Suricata: Alert - SURICATA TLS invalid handshake message,166,Nhiễu nền
+wheeler,Suricata: Alert - SURICATA TLS invalid record/traffic,166,Nhiễu nền
+wheeler,Wazuh: Dovecot Authentication Success.,154,Nhiễu nền
+wheeler,Wazuh: Web server 400 error code.,31,Tấn công bị bỏ sót (Nmap)
+wheeler,Wazuh: Apache: Attempt to access forbidden file or directory.,24,Tấn công bị bỏ sót (Nmap)
+wheeler,Suricata: Alert - ET POLICY GNU/Linux APT User-Agent Outbound likely related to package management,10,Nhiễu nền
+wheeler,Wazuh: ClamAV database update,10,Nhiễu nền
+wilson,Wazuh: Dovecot Authentication Success.,1190,Nhiễu nền
+wilson,Suricata: Alert - SURICATA TLS invalid record/traffic,822,Nhiễu nền
+wilson,Suricata: Alert - SURICATA TLS invalid handshake message,820,Nhiễu nền
+wilson,Wazuh: Web server 400 error code.,35,Tấn công bị bỏ sót (Nmap)
+wilson,Wazuh: Apache: Attempt to access forbidden file or directory.,24,Tấn công bị bỏ sót (Nmap)
+wilson,Wazuh: ClamAV database update,16,Nhiễu nền
+wilson,Wazuh: sshd: insecure connection attempt (scan).,9,Nhiễu nền
+wilson,Suricata: Alert - ET POLICY GNU/Linux APT User-Agent Outbound likely related to package management,7,Nhiễu nền

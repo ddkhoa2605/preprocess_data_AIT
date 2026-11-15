@@ -1,0 +1,37 @@
+time_label,name,n
+dnsteal,Wazuh: Dovecot Authentication Success.,724
+dnsteal,Suricata: Alert - SURICATA TLS invalid handshake message,440
+dnsteal,Suricata: Alert - SURICATA TLS invalid record/traffic,440
+cracking,Wazuh: Dovecot Authentication Success.,318
+cracking,Suricata: Alert - SURICATA TLS invalid record/traffic,196
+cracking,Suricata: Alert - SURICATA TLS invalid handshake message,196
+dirb,Wazuh: Dovecot Authentication Success.,124
+dirb,Suricata: Alert - SURICATA TLS invalid record/traffic,114
+dirb,Suricata: Alert - SURICATA TLS invalid handshake message,112
+network_scans,Suricata: Alert - SURICATA TLS invalid record/traffic,46
+network_scans,Suricata: Alert - SURICATA TLS invalid handshake message,46
+service_scans,Wazuh: Web server 400 error code.,35
+service_scans,Wazuh: Apache: Attempt to access forbidden file or directory.,24
+wpscan,Suricata: Alert - SURICATA TLS invalid handshake message,12
+wpscan,Suricata: Alert - SURICATA TLS invalid record/traffic,12
+webshell,Suricata: Alert - SURICATA TLS invalid handshake message,10
+webshell,Suricata: Alert - SURICATA TLS invalid record/traffic,10
+service_scans,Wazuh: sshd: insecure connection attempt (scan).,9
+cracking,Wazuh: ClamAV database update,8
+dnsteal,Wazuh: ClamAV database update,8
+privilege_escalation,Wazuh: Dovecot Authentication Success.,8
+cracking,Suricata: Alert - ET POLICY GNU/Linux APT User-Agent Outbound likely related to package management,7
+reverse_shell,Wazuh: Dovecot Authentication Success.,6
+wpscan,Wazuh: Dovecot Authentication Success.,6
+network_scans,Wazuh: Dovecot Authentication Success.,4
+service_scans,Suricata: Alert - SURICATA TLS invalid record/traffic,2
+dirb,Suricata: Alert - SURICATA TLS invalid record type,2
+dnsteal,Wazuh: syslog: User authentication failure.,2
+reverse_shell,Suricata: Alert - SURICATA TLS invalid handshake message,2
+service_scans,Suricata: Alert - SURICATA TLS invalid handshake message,2
+dnsteal,Wazuh: Dovecot Invalid User Login Attempt.,2
+reverse_shell,Suricata: Alert - SURICATA TLS invalid record/traffic,2
+cracking,Wazuh: CMS (WordPress or Joomla) login attempt.,1
+dnsteal,Wazuh: CMS (WordPress or Joomla) login attempt.,1
+dnsteal,Wazuh: PAM: User login failed.,1
+service_scans,Wazuh: Multiple web server 400 error codes from same source ip.,1

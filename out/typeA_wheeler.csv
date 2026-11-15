@@ -1,0 +1,28 @@
+time_label,name,n
+network_scans,Suricata: Alert - ET INFO Observed DNS Query to .biz TLD,138
+dnsteal,Suricata: Alert - ET INFO Observed DNS Query to .biz TLD,111
+dnsteal,Wazuh: Dovecot Authentication Success.,110
+network_scans,Suricata: Alert - SURICATA TLS invalid record/traffic,88
+network_scans,Suricata: Alert - SURICATA TLS invalid handshake message,88
+dirb,Suricata: Alert - ET INFO Observed DNS Query to .biz TLD,58
+dirb,Suricata: Alert - SURICATA TLS invalid handshake message,44
+dirb,Suricata: Alert - SURICATA TLS invalid record/traffic,44
+dirb,Wazuh: Dovecot Authentication Success.,34
+service_scans,Wazuh: Web server 400 error code.,31
+service_scans,Wazuh: Apache: Attempt to access forbidden file or directory.,24
+dnsteal,Suricata: Alert - SURICATA TLS invalid handshake message,16
+dnsteal,Suricata: Alert - SURICATA TLS invalid record/traffic,16
+dnsteal,Wazuh: ClamAV database update,10
+dirb,Suricata: Alert - ET POLICY GNU/Linux APT User-Agent Outbound likely related to package management,10
+network_scans,Wazuh: Dovecot Authentication Success.,10
+wpscan,Suricata: Alert - SURICATA TLS invalid handshake message,8
+wpscan,Suricata: Alert - SURICATA TLS invalid record/traffic,8
+service_scans,Wazuh: sshd: insecure connection attempt (scan).,6
+reverse_shell,Suricata: Alert - SURICATA TLS invalid record/traffic,4
+reverse_shell,Suricata: Alert - SURICATA TLS invalid handshake message,4
+reverse_shell,Suricata: Alert - ET INFO Observed DNS Query to .biz TLD,4
+privilege_escalation,Suricata: Alert - SURICATA TLS invalid record/traffic,4
+privilege_escalation,Suricata: Alert - SURICATA TLS invalid handshake message,4
+service_scans,Wazuh: Multiple web server 400 error codes from same source ip.,2
+webshell,Suricata: Alert - SURICATA TLS invalid record/traffic,2
+webshell,Suricata: Alert - SURICATA TLS invalid handshake message,2

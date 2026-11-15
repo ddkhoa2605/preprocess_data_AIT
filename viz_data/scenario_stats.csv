@@ -1,0 +1,9 @@
+scenario,alerts_all_ids,removed_aminer,removed_fastlog,removed_mailinfo,alerts_product,attack_alerts,agree_pct,type_a,type_b,precision_time_pct,recall_time_pct,attack_clusters,attack_clusters_nmap_fixed,nmap_labeled,nmap_unlabeled,step_service_scan,step_wpscan,step_dirb,step_webshell_cmd,step_crack_passwords,step_attacker_change_user,step_escalated_sudo_command,step_dnsteal
+fox,473104,10581,11084,9381,442058,410642,99.78,969,0,99.8,100.0,21,27,30,25,10,6,7,0,0,2,3,0
+harrison,593948,10194,67411,10782,505561,462612,90.23,2925,46477,99.3,90.0,20,22,18,8,8,6,7,0,0,2,4,2
+russellmitchell,45544,4056,9186,4844,27458,7683,98.12,516,0,93.7,100.0,23,31,33,31,13,4,5,0,0,2,3,0
+santos,130779,4266,44112,9881,72520,33473,63.08,1067,25707,87.9,23.2,22,25,21,9,7,5,5,0,0,2,4,2
+shaw,70782,2243,16708,9438,42393,5198,98.94,449,0,92.0,100.0,12,12,0,0,0,5,5,0,0,2,4,0
+wardbeck,91257,3053,24510,10835,52859,5239,99.07,489,0,91.5,100.0,19,22,15,9,6,7,5,0,0,2,4,0
+wheeler,616161,12222,68674,15291,519974,419331,99.83,880,0,99.8,100.0,24,31,30,27,11,8,7,0,0,2,4,0
+wilson,634246,8943,65038,22211,538054,426958,99.45,2933,0,99.3,100.0,26,31,33,28,14,6,7,0,0,2,4,0

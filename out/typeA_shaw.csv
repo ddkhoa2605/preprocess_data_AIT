@@ -1,0 +1,12 @@
+time_label,name,n
+cracking,Wazuh: Dovecot Authentication Success.,156
+cracking,Suricata: Alert - SURICATA TLS invalid record/traffic,102
+cracking,Suricata: Alert - SURICATA TLS invalid handshake message,102
+dnsteal,Wazuh: Dovecot Authentication Success.,64
+dnsteal,Wazuh: ClamAV database update,9
+privilege_escalation,Wazuh: Dovecot Authentication Success.,6
+cracking,Wazuh: ClamAV database update,3
+cracking,Wazuh: Web server 400 error code.,2
+network_scans,Wazuh: Dovecot Authentication Success.,2
+reverse_shell,Wazuh: Dovecot Authentication Success.,2
+service_scans,Wazuh: sshd: insecure connection attempt (scan).,1

@@ -1,0 +1,647 @@
+<meta name="dash-one-writer">
+<style>
+  .au { display: grid; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+  .au-head { display: grid; gap: var(--cds-gap-sm); max-width: 72ch; }
+  .au-eyebrow { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .04em; text-transform: uppercase; }
+  .au-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+  .au-lede { font-size: var(--cds-font-size-body); margin: 0; line-height: 1.55; }
+  .au-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--cds-gap-md); }
+  .au-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-xs); align-content: start; min-width: 0; }
+  .au-tile-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .au-big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 2.1rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .au-tile-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.45; }
+  .au-chip { display: inline-flex; align-items: center; gap: 6px; font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; width: fit-content; }
+  .au-chip.bad { color: var(--color-bad); }
+  .au-chip.warn { color: var(--color-warn); }
+  .au-chip.ok { color: var(--color-ok); }
+  .au-sec { display: grid; gap: var(--cds-gap-md); min-width: 0; }
+  .au-sec h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; text-wrap: balance; }
+  .au-sec > p, .au-note { margin: 0; max-width: 72ch; line-height: 1.55; color: var(--color-fg-muted); }
+  .au-sec > p b, .au-note b { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .au-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--cds-gap-lg); }
+  .au-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-sm); min-width: 0; }
+  .au-card h3 { margin: 0; font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); }
+  .au-chart { position: relative; min-height: 160px; min-width: 0; }
+  .au-chart svg { display: block; overflow: visible; }
+  .au-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .au-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .au-sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; background: var(--cds-chart-muted); }
+  .au-sw.line { height: 2px; width: 14px; border-radius: 0; }
+  .au-axis text, .au-lab { fill: var(--cds-text-secondary); font-size: var(--cds-font-size-caption); font-family: var(--font-anthropic-sans); }
+  .au-axis path, .au-axis line { stroke: var(--cds-chart-axis); }
+  .au-gridl line { stroke: var(--cds-chart-grid); }
+  .au-gridl path { display: none; }
+  .au-val { fill: var(--color-fg); font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .au-tip { position: absolute; z-index: 5; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); border-radius: var(--cds-radius); padding: 6px 10px; font-size: var(--cds-font-size-caption); color: var(--cds-text-secondary); max-width: 280px; line-height: 1.45; }
+  .au-tip .au-tip-h { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .au-fail { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: 0; }
+  .au-tablewrap { overflow-x: auto; min-width: 0; }
+  .au-table { border-collapse: collapse; width: 100%; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .au-table th, .au-table td { padding: 6px 10px; border-bottom: 1px solid var(--color-border-line); text-align: right; white-space: nowrap; }
+  .au-table th:first-child, .au-table td:first-child { text-align: left; }
+  .au-table th { color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); }
+  .au-table td.zero { color: var(--color-bad); font-weight: var(--cds-font-weight-medium); }
+  .au-table td.flag { color: var(--color-warn); font-weight: var(--cds-font-weight-medium); }
+  .au-row { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+  .au details { border-top: 1px solid var(--color-border-line); padding-top: var(--cds-pad-md); }
+  .au details summary { cursor: pointer; font-weight: var(--cds-font-weight-medium); }
+  .au details dl { display: grid; gap: var(--cds-gap-sm); max-width: 72ch; margin: var(--cds-gap-md) 0 0; }
+  .au details dt { font-weight: var(--cds-font-weight-medium); }
+  .au details dd { margin: 0; color: var(--color-fg-muted); line-height: 1.55; }
+  [data-dash-source-state=refreshing] { opacity: .5; }
+</style>
+
+<div class="au" data-read lang="vi">
+  <header class="au-head" id="tong-quan">
+    <div class="au-eyebrow">AIT Alert Data Set · 8 kịch bản · kiểm tra lại ngày 12/11/2026</div>
+    <h1 class="au-title">Bộ dữ liệu sau khi kiểm tra lại nhãn</h1>
+    <p class="au-lede">Trong phạm vi sản phẩm (chỉ <code>_wazuh.json</code>, đã khử trùng lặp), ba kịch bản test cho tối đa
+      <b data-draw="kpi-maxfixed" data-source="combo_summary" data-field="max_fixed" data-row="0">—</b> cụm tấn công.
+      <span class="au-verdict-below">Con số này dưới mục tiêu <b data-draw="target">—</b> cụm, kể cả khi đã sửa các nhãn bị bỏ sót.</span>
+      <span class="au-verdict-above">Con số này đạt mục tiêu <b data-draw="target">—</b> cụm sau khi sửa các nhãn bị bỏ sót.</span>
+      <span data-draw="verdict"></span>
+      event_label tốt hơn time_label, nhưng vẫn bỏ sót ít nhất
+      <b data-draw="kpi-nmap" data-source="totals" data-field="nmap_unlabeled" data-row="0">—</b> alert Nmap.</p>
+  </header>
+
+  <section class="au-tiles" id="chi-so" aria-label="Chỉ số chính">
+    <div class="au-tile" id="tile-combo">
+      <div class="au-tile-label">Cụm tấn công, 3 kịch bản tốt nhất</div>
+      <div class="au-big" data-draw="kpi-maxfixed2" data-source="combo_summary" data-field="max_fixed" data-row="0">—</div>
+      <div class="au-chip bad" id="chip-combo">Dưới mục tiêu</div>
+      <div class="au-tile-note">Đã tính cả cụm Nmap bị bỏ sót. Chưa sửa nhãn thì chỉ có <span data-draw="kpi-maxraw" data-source="combo_summary" data-field="max_raw" data-row="0">—</span>.</div>
+    </div>
+    <div class="au-tile" id="tile-total">
+      <div class="au-tile-label">Cụm tấn công, cả 8 kịch bản</div>
+      <div class="au-big" data-draw="kpi-total" data-source="totals" data-field="attack_clusters" data-row="0">—</div>
+      <div class="au-tile-note">Sau khi sửa nhãn Nmap: <span data-draw="kpi-totalfixed" data-source="totals" data-field="attack_clusters_nmap_fixed" data-row="0">—</span> cụm. Cụm gom theo rule, host và IP nguồn, tách khi lặng quá 30 phút.</div>
+    </div>
+    <div class="au-tile" id="tile-dedup">
+      <div class="au-tile-label">Alert bị loại khi về phạm vi sản phẩm</div>
+      <div class="au-big"><span data-draw="kpi-removed" data-source="totals" data-field="removed_pct" data-row="0">—</span>%</div>
+      <div class="au-tile-note">Gồm AMiner và hai nguồn trùng lặp (Suricata <code>fast.log</code>, <code>mail.info</code>).</div>
+    </div>
+    <div class="au-tile" id="tile-precision">
+      <div class="au-tile-label">Precision của time_label, russellmitchell</div>
+      <div class="au-big"><span data-draw="kpi-prec" data-source="stats" data-field="precision_time_pct" data-where="scenario=russellmitchell">—</span>%</div>
+      <div class="au-tile-note">So với event_label, sau khử trùng lặp. Phần còn lại là alert time_label gọi là tấn công nhưng thực ra là nhiễu nền.</div>
+    </div>
+  </section>
+
+  <section class="au-sec" id="pham-vi">
+    <h2>Một phần lớn số alert là AMiner hoặc bản trùng</h2>
+    <p>Mỗi alert Suricata vào Wazuh hai lần: từ <code>eve.json</code> và từ <code>fast.log</code>. Bản <code>fast.log</code> luôn có event_label "-", nên nếu giữ lại sẽ làm phồng số lệch nhãn. Dòng log Dovecot cũng được ghi vào cả <code>mail.info</code> lẫn <code>mail.log</code>.</p>
+    <div class="au-card">
+      <div class="au-legend" aria-hidden="true">
+        <span><i class="au-sw" data-sw="0"></i>Giữ lại (phạm vi sản phẩm)</span>
+        <span><i class="au-sw" data-sw="1"></i>Suricata fast.log (trùng)</span>
+        <span><i class="au-sw" data-sw="2"></i>mail.info (trùng)</span>
+        <span><i class="au-sw" data-sw="3"></i>AMiner (ngoài phạm vi)</span>
+      </div>
+      <div class="au-chart" id="chart-scope" data-draw="scope" data-source="stats"></div>
+    </div>
+  </section>
+
+  <section class="au-sec" id="khop-nhan">
+    <h2>Hai nhãn khớp nhau ở hầu hết kịch bản, trừ harrison và santos</h2>
+    <p>Kiểu A là alert time_label gọi là tấn công nhưng event_label không gắn với sự kiện nào. Kiểu B là ngược lại. Kiểu B chỉ xuất hiện ở harrison và santos, và đều là exfiltration DNS thật (xem phần sau).</p>
+    <div class="au-tablewrap">
+      <table class="au-table" id="table-scen" data-source="stats" data-row-key="scenario">
+        <thead><tr>
+          <th data-field="scenario">Kịch bản</th>
+          <th data-field="alerts_product">Alert (phạm vi SP)</th>
+          <th data-field="attack_alerts">Alert tấn công</th>
+          <th data-field="agree_pct">Khớp (%)</th>
+          <th data-field="type_a">Kiểu A</th>
+          <th data-field="type_b">Kiểu B</th>
+          <th data-field="precision_time_pct">Precision time (%)</th>
+          <th data-field="recall_time_pct">Recall time (%)</th>
+        </tr></thead>
+        <tbody data-draw="scen-table"></tbody>
+      </table>
+    </div>
+    <h3 class="au-note"><b>russellmitchell: bảng chéo qua từng bước lọc</b></h3>
+    <div class="au-tablewrap">
+      <table class="au-table" id="table-matrix" data-source="matrix" data-row-key="scope">
+        <thead><tr>
+          <th data-field="scope">Phạm vi</th>
+          <th data-field="both_attack">Cả hai: tấn công</th>
+          <th data-field="type_a">Kiểu A</th>
+          <th data-field="type_b">Kiểu B</th>
+          <th data-field="both_benign">Cả hai: bình thường</th>
+        </tr></thead>
+        <tbody data-draw="matrix-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="au-sec" id="kieu-a">
+    <h2>Kiểu A chủ yếu là nhiễu nền, nhưng có cả tấn công bị bỏ sót</h2>
+    <p>Đăng nhập Dovecot, Suricata TLS invalid và ClamAV là hoạt động bình thường xảy ra trong giờ tấn công. Các rule web 400/403 trên webserver, cloud_share và máy mail thì khác: log của chúng chứa request "Nmap Scripting Engine", nhưng analyze.py không nạp nhãn cho các host này.</p>
+    <div class="au-card">
+      <div class="au-row">
+        <label for="typea-scenario" class="au-tile-label">Kịch bản</label>
+        <select id="typea-scenario" class="dash-select" data-draw="typea-sel" data-source="typea" aria-label="Kịch bản"></select>
+      </div>
+      <div class="au-legend" aria-hidden="true">
+        <span><i class="au-sw" data-sw="0"></i>Nhiễu nền</span>
+        <span><i class="au-sw" data-sw="1"></i>Tấn công bị bỏ sót (có Nmap trong log)</span>
+      </div>
+      <div class="au-chart" id="chart-typea" data-draw="typea" data-source="typea"></div>
+    </div>
+  </section>
+
+  <section class="au-sec" id="dnsteal">
+    <h2>Exfiltration DNS chạy từ đầu dataset và dừng ở bước service_stop</h2>
+    <p>Mỗi alert ".biz" là một truy vấn mang một mảnh của file <code>customers_*.xlsx</code> hoặc <code>payroll_*.xlsx</code>, gửi từ internal_share. Lưu lượng đều đặn mỗi giờ và tắt đúng lúc service_stop. Khung "dnsteal" của time_label nằm sau đó và không chứa alert nào, nên chỗ sai là time_label, còn event_label đúng.</p>
+    <div class="au-legend" aria-hidden="true">
+      <span><i class="au-sw" data-sw="0"></i>Alert .biz mỗi giờ (bản eve.json)</span>
+      <span><i class="au-sw" data-sw="muted"></i>Chuỗi xâm nhập</span>
+      <span><i class="au-sw" data-sw="warn"></i>Khung dnsteal theo time_label</span>
+      <span><i class="au-sw line" data-sw="crit"></i>service_stop</span>
+    </div>
+    <div class="au-grid2">
+      <div class="au-card" id="card-biz-harrison">
+        <h3>harrison</h3>
+        <div class="au-chart" data-draw="biz" data-scenario="harrison" data-source="biz bizmarks"></div>
+      </div>
+      <div class="au-card" id="card-biz-santos">
+        <h3>santos</h3>
+        <div class="au-chart" data-draw="biz" data-scenario="santos" data-source="biz bizmarks"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="au-sec" id="nmap">
+    <h2>event_label bỏ sót request Nmap trên các host không có file nhãn</h2>
+    <p>Đếm các alert có dấu vết Nmap rõ ràng (user-agent hoặc chữ ký Suricata). Đây là cận dưới: request bị chặn không ghi user-agent thì không được đếm.</p>
+    <div class="au-card">
+      <div class="au-legend" aria-hidden="true">
+        <span><i class="au-sw" data-sw="0"></i>Có nhãn tấn công</span>
+        <span><i class="au-sw" data-sw="1"></i>Bị gán "-"</span>
+      </div>
+      <div class="au-chart" id="chart-nmap" data-draw="nmap" data-source="stats"></div>
+    </div>
+  </section>
+
+  <section class="au-sec" id="cum">
+    <h2>Mỗi kịch bản chỉ có vài chục cụm tấn công</h2>
+    <p>Sửa nhãn Nmap chỉ thêm được vài cụm mỗi kịch bản. Bảng dưới đếm số cụm chứa từng bước tấn công: Wazuh không thấy được webshell và cracking khi không có AMiner, còn wpscan và dirb cũng chỉ có vài cụm mỗi kịch bản.</p>
+    <div class="au-card">
+      <div class="au-legend" aria-hidden="true">
+        <span><i class="au-sw" data-sw="0"></i>Theo event_label gốc</span>
+        <span><i class="au-sw" data-sw="1"></i>Sau khi sửa nhãn Nmap</span>
+      </div>
+      <div class="au-chart" id="chart-clusters" data-draw="clusters" data-source="stats"></div>
+    </div>
+    <div class="au-tablewrap">
+      <table class="au-table" id="table-steps" data-source="stats" data-row-key="scenario">
+        <thead><tr>
+          <th data-field="scenario">Kịch bản</th>
+          <th data-field="step_service_scan">service_scan</th>
+          <th data-field="step_wpscan">wpscan</th>
+          <th data-field="step_dirb">dirb</th>
+          <th data-field="step_webshell_cmd">webshell_cmd</th>
+          <th data-field="step_crack_passwords">crack_passwords</th>
+          <th data-field="step_attacker_change_user">change_user</th>
+          <th data-field="step_escalated_sudo_command">escalated_sudo</th>
+          <th data-field="step_dnsteal">dnsteal</th>
+        </tr></thead>
+        <tbody data-draw="steps-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="au-sec" id="to-hop">
+    <h2>Không tổ hợp 3 kịch bản nào đạt <span data-draw="target">—</span> cụm tấn công</h2>
+    <p>Mỗi chấm là một trong <span data-draw="kpi-ncombos" data-source="combo_summary" data-field="combos" data-row="0">—</span> cách chọn 3 kịch bản test. Số tổ hợp đạt mục tiêu: <b data-draw="kpi-reach" data-source="combo_summary" data-field="reaching_target" data-row="0">—</b>.</p>
+    <div class="au-card">
+      <div class="au-legend" aria-hidden="true">
+        <span><i class="au-sw" data-sw="0"></i>Theo event_label gốc</span>
+        <span><i class="au-sw" data-sw="1"></i>Sau khi sửa nhãn Nmap</span>
+        <span><i class="au-sw line" data-sw="crit"></i>Mục tiêu</span>
+      </div>
+      <div class="au-chart" id="chart-combos" data-draw="combos" data-source="combos"></div>
+    </div>
+  </section>
+
+  <section class="au-sec" id="dinh-nghia-cum">
+    <h2>Đổi cách gom cụm cũng không đạt mục tiêu</h2>
+    <p>Khoảng giữa tổ hợp ít cụm nhất và nhiều cụm nhất, theo event_label gốc.</p>
+    <div class="au-card">
+      <div class="au-chart" id="chart-defs" data-draw="defs" data-source="defs"></div>
+    </div>
+  </section>
+
+  <details id="dinh-nghia">
+    <summary>Định nghĩa và cách tính</summary>
+    <dl>
+      <dt>Phạm vi sản phẩm</dt>
+      <dd>Chỉ các alert trong <code>&lt;kịch bản&gt;_wazuh.json</code>, gồm Wazuh và Suricata do Wazuh thu. Không có AMiner. Bỏ <code>/var/log/suricata/fast.log</code> (bản sao 1:1 của eve.json) và <code>/var/log/mail.info</code> (bản sao của mail.log).</dd>
+      <dt>Alert tấn công</dt>
+      <dd>event_label khác "-". Nhãn này do analyze.py của AIT gán, bằng cách so dòng log với file nhãn của AIT-LDSv2.</dd>
+      <dt>Cụm</dt>
+      <dd>Gom gần đúng theo (rule.id, host, IP nguồn). Mở cụm mới khi hai alert liền nhau cách quá 30 phút. Cụm tấn công là cụm có ít nhất một alert tấn công. Cụm thật sẽ do bước pre-triage của sản phẩm tạo ra.</dd>
+      <dt>Sửa nhãn Nmap</dt>
+      <dd>Coi là tấn công các alert có "nmap" trong log hoặc chữ ký Suricata "ET SCAN Possible Nmap". Đây là sửa tối thiểu, chưa thay cho kiểm tra tay.</dd>
+      <dt>Đối chiếu CATS</dt>
+      <dd>Bỏ các rule Wazuh nhóm IDS (bản fast.log) thì russellmitchell còn đúng 23.116 alert Wazuh, trùng số trong paper CATS.</dd>
+    </dl>
+  </details>
+</div>
+
+<script>
+  window.AU = (() => {
+    const loc = d3.formatLocale({ decimal: ',', thousands: '.', grouping: [3], currency: ['', ''] });
+    const int = loc.format(',d');
+    const dec1 = loc.format(',.1f');
+    const dec2 = loc.format(',.2f');
+    const n = (v) => (v === '' || v == null ? NaN : +v);
+    const TARGET = 100;
+    const state = { typeaScenario: 'russellmitchell' };
+
+    // Trả về data của các nguồn, hoặc null và vẽ trạng thái chờ/lỗi.
+    function ready(el, ids, text) {
+      for (const id of ids) {
+        const r = dash.data(id);
+        if (r.status !== 'ok') {
+          el.replaceChildren();
+          if (r.status === 'loading') { el.classList.add('dash-skeleton'); if (text) el.textContent = '—'; }
+          else {
+            el.classList.remove('dash-skeleton');
+            if (!text && (r.status === 'error' || r.status === 'missing')) {
+              const p = document.createElement('p'); p.className = 'au-fail'; p.textContent = 'Không tải được dữ liệu'; el.appendChild(p);
+            } else el.textContent = '—';
+          }
+          return null;
+        }
+      }
+      el.classList.remove('dash-skeleton');
+      return ids.map((id) => dash.data(id).data);
+    }
+
+    function tip(el) {
+      const t = document.createElement('div');
+      t.className = 'au-tip'; t.hidden = true; el.appendChild(t);
+      return {
+        show(lines, x, y) {
+          t.replaceChildren(...lines.map((l, i) => { const d = document.createElement('div'); d.textContent = l; if (i === 0) d.className = 'au-tip-h'; return d; }));
+          t.hidden = false;
+          const w = el.clientWidth, tw = t.offsetWidth, th = t.offsetHeight;
+          t.style.left = Math.max(0, Math.min(w - tw, x + 12)) + 'px';
+          t.style.top = (y - th - 10 < 0 ? y + 14 : y - th - 10) + 'px';
+        },
+        hide() { t.hidden = true; },
+      };
+    }
+
+    function textWidth(svg, strings) {
+      const g = svg.append('g').attr('class', 'au-axis');
+      let w = 0;
+      for (const s of strings) { const t = g.append('text').text(s); w = Math.max(w, t.node().getComputedTextLength()); }
+      g.remove();
+      return w;
+    }
+
+    function svgIn(el, h, label) {
+      el.replaceChildren();
+      const w = Math.max(280, el.clientWidth);
+      const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`)
+        .attr('role', 'img').attr('aria-label', label);
+      return { svg, w };
+    }
+
+    const swatch = (k) => k === 'muted' ? 'var(--cds-chart-muted)' : k === 'warn' ? 'var(--color-warn)' : k === 'crit' ? 'var(--cds-chart-status-critical)' : dash.colors[+k];
+
+    return { loc, int, dec1, dec2, n, TARGET, state, ready, tip, textWidth, svgIn, swatch };
+  })();
+
+  document.querySelectorAll('[data-sw]').forEach((s) => { s.style.background = AU.swatch(s.dataset.sw); });
+
+  dash.calc('totals', {
+    inputs: ['stats'],
+    title: 'Tổng 8 kịch bản',
+    description: 'Cộng các cột của bảng theo kịch bản; tỉ lệ alert bị loại = 1 − alert phạm vi SP / alert cả 3 IDS.',
+    fn: (stats) => {
+      const sum = (k) => stats.reduce((a, r) => a + Number(r[k]), 0);
+      return [{
+        attack_clusters: sum('attack_clusters'),
+        attack_clusters_nmap_fixed: sum('attack_clusters_nmap_fixed'),
+        nmap_unlabeled: sum('nmap_unlabeled'),
+        removed_pct: Math.round(1000 * (1 - sum('alerts_product') / sum('alerts_all_ids'))) / 10,
+      }];
+    },
+  });
+
+  dash.calc('combo_summary', {
+    inputs: ['combos'],
+    title: 'Tóm tắt tổ hợp 3 kịch bản',
+    description: 'Cụm tấn công lớn nhất và nhỏ nhất trên các tổ hợp 3 kịch bản, và số tổ hợp đạt mục tiêu 100 cụm.',
+    fn: (combos) => {
+      const fixed = combos.map((r) => Number(r.attack_clusters_nmap_fixed));
+      const raw = combos.map((r) => Number(r.attack_clusters));
+      return [{
+        max_fixed: Math.max(...fixed),
+        max_raw: Math.max(...raw),
+        min_raw: Math.min(...raw),
+        combos: combos.length,
+        reaching_target: fixed.filter((v) => v >= 100).length,
+      }];
+    },
+  });
+</script>
+
+<script>
+  const textDraw = (name, src, field, fmt) => dash.draw(name, (el) => {
+    const d = AU.ready(el, [src], true); if (!d) return;
+    el.textContent = fmt(d[0][0][field]);
+  });
+  textDraw('kpi-maxfixed', 'combo_summary', 'max_fixed', AU.int);
+  textDraw('kpi-maxfixed2', 'combo_summary', 'max_fixed', AU.int);
+  textDraw('kpi-maxraw', 'combo_summary', 'max_raw', AU.int);
+  textDraw('kpi-ncombos', 'combo_summary', 'combos', AU.int);
+  textDraw('kpi-reach', 'combo_summary', 'reaching_target', AU.int);
+  textDraw('kpi-total', 'totals', 'attack_clusters', AU.int);
+  textDraw('kpi-totalfixed', 'totals', 'attack_clusters_nmap_fixed', AU.int);
+  textDraw('kpi-nmap', 'totals', 'nmap_unlabeled', AU.int);
+  textDraw('kpi-removed', 'totals', 'removed_pct', AU.dec1);
+
+  dash.draw('target', (el) => { el.textContent = AU.int(AU.TARGET); });
+
+  dash.draw('kpi-prec', (el) => {
+    const d = AU.ready(el, ['stats'], true); if (!d) return;
+    const r = d[0].find((x) => x.scenario === 'russellmitchell');
+    el.textContent = r ? AU.dec1(AU.n(r.precision_time_pct)) : '—';
+  });
+
+  dash.draw('verdict', (el) => {
+    const r = dash.data('combo_summary');
+    const ok = r.status === 'ok';
+    const reach = ok && r.data[0].max_fixed >= AU.TARGET;
+    document.querySelectorAll('.au-verdict-below').forEach((s) => { s.hidden = !ok || reach; });
+    document.querySelectorAll('.au-verdict-above').forEach((s) => { s.hidden = !ok || !reach; });
+    const chip = document.getElementById('chip-combo');
+    if (chip) { chip.hidden = !ok; chip.className = 'au-chip ' + (reach ? 'ok' : 'bad'); }
+  });
+</script>
+
+<script>
+  // Bảng theo kịch bản
+  dash.draw('scen-table', (tb) => {
+    const d = AU.ready(tb, ['stats']); if (!d) return;
+    const cols = [['scenario', (v) => v], ['alerts_product', AU.int], ['attack_alerts', AU.int], ['agree_pct', AU.dec2],
+      ['type_a', AU.int], ['type_b', AU.int], ['precision_time_pct', AU.dec1], ['recall_time_pct', AU.dec1]];
+    tb.replaceChildren(...d[0].map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.scenario;
+      for (const [k, f] of cols) {
+        const td = document.createElement('td'); const v = k === 'scenario' ? r[k] : AU.n(r[k]);
+        td.textContent = f(v);
+        if ((k === 'type_b' && v > 0) || (k === 'agree_pct' && v < 95) || (k === 'recall_time_pct' && v < 95)) td.className = 'flag';
+        tr.appendChild(td);
+      }
+      return tr;
+    }));
+  });
+
+  dash.draw('matrix-table', (tb) => {
+    const d = AU.ready(tb, ['matrix']); if (!d) return;
+    tb.replaceChildren(...d[0].map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.scope;
+      for (const k of ['scope', 'both_attack', 'type_a', 'type_b', 'both_benign']) {
+        const td = document.createElement('td'); td.textContent = k === 'scope' ? r[k] : AU.int(AU.n(r[k])); tr.appendChild(td);
+      }
+      return tr;
+    }));
+  });
+
+  dash.draw('steps-table', (tb) => {
+    const d = AU.ready(tb, ['stats']); if (!d) return;
+    const steps = ['step_service_scan', 'step_wpscan', 'step_dirb', 'step_webshell_cmd', 'step_crack_passwords',
+      'step_attacker_change_user', 'step_escalated_sudo_command', 'step_dnsteal'];
+    const max = d3.max(d[0], (r) => d3.max(steps, (k) => AU.n(r[k])));
+    tb.replaceChildren(...d[0].map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.scenario;
+      const th = document.createElement('td'); th.textContent = r.scenario; tr.appendChild(th);
+      for (const k of steps) {
+        const v = AU.n(r[k]); const td = document.createElement('td'); td.textContent = AU.int(v);
+        if (v === 0) td.className = 'zero';
+        else td.style.background = `color-mix(in srgb, ${dash.colors[0]} ${Math.round(8 + 32 * v / max)}%, transparent)`;
+        tr.appendChild(td);
+      }
+      return tr;
+    }));
+  });
+</script>
+
+<script>
+  // Thanh ngang xếp chồng 100%: phạm vi và trùng lặp
+  dash.draw('scope', (el) => {
+    const d = AU.ready(el, ['stats']); if (!d) return;
+    const rows = d[0];
+    const keys = [['alerts_product', 'Giữ lại'], ['removed_fastlog', 'Suricata fast.log'], ['removed_mailinfo', 'mail.info'], ['removed_aminer', 'AMiner']];
+    const bh = 18, gap = 10, top = 4, bottom = 24;
+    const { svg, w } = AU.svgIn(el, top + rows.length * (bh + gap) + bottom, 'Tỉ lệ alert giữ lại và bị loại theo kịch bản');
+    const lw = AU.textWidth(svg, rows.map((r) => r.scenario)) + 10;
+    const x = d3.scaleLinear([0, 1], [lw, w - 8]);
+    svg.append('g').attr('class', 'au-axis').attr('transform', `translate(0,${top + rows.length * (bh + gap)})`)
+      .call(d3.axisBottom(x).ticks(w < 420 ? 4 : 5).tickFormat((v) => AU.int(v * 100) + '%'));
+    const tp = AU.tip(el);
+    rows.forEach((r, i) => {
+      const total = AU.n(r.alerts_all_ids); let acc = 0; const y = top + i * (bh + gap);
+      svg.append('text').attr('class', 'au-lab').attr('x', 0).attr('y', y + bh / 2).attr('dy', '0.35em').text(r.scenario);
+      keys.forEach(([k, label], j) => {
+        const v = AU.n(r[k]); const x0 = x(acc / total), x1 = x((acc + v) / total); acc += v;
+        svg.append('rect').attr('x', x0).attr('y', y).attr('height', bh).attr('width', Math.max(0, x1 - x0 - 2))
+          .style('fill', dash.colors[j])
+          .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev, el); tp.show([`${r.scenario} · ${label}`, `${AU.int(v)} alert (${AU.dec1(100 * v / total)}%)`, `Tổng cả 3 IDS: ${AU.int(total)}`], px, py); })
+          .on('pointerleave', () => tp.hide());
+      });
+    });
+  });
+
+  // Kiểu A theo rule
+  dash.draw('typea-sel', (sel) => {
+    const r = dash.data('typea');
+    const names = r.status === 'ok' ? [...new Set(r.data.map((x) => x.scenario))] : [];
+    sel.replaceChildren(...names.map((s) => new Option(s, s)));
+    sel.value = AU.state.typeaScenario;
+    sel.onchange = () => { AU.state.typeaScenario = sel.value; dash.draw('typea'); };
+  });
+
+  dash.draw('typea', (el) => {
+    const d = AU.ready(el, ['typea']); if (!d) return;
+    const rows = d[0].filter((r) => r.scenario === AU.state.typeaScenario);
+    const rowH = 40, top = 2;
+    const { svg, w } = AU.svgIn(el, top + rows.length * rowH + 4, `Alert kiểu A theo rule, kịch bản ${AU.state.typeaScenario}`);
+    const max = d3.max(rows, (r) => AU.n(r.alerts)) || 1;
+    const vw = AU.textWidth(svg, [AU.int(max)]) + 8;
+    const x = d3.scaleLinear([0, max], [0, w - vw - 4]);
+    const tp = AU.tip(el);
+    rows.forEach((r, i) => {
+      const y = top + i * rowH; const v = AU.n(r.alerts);
+      const missed = r.verdict !== 'Nhiễu nền';
+      svg.append('text').attr('class', 'au-lab').attr('x', 0).attr('y', y + 11).text(r.rule.replace(/^(Wazuh|Suricata): (Alert - )?/, ''));
+      svg.append('rect').attr('x', 0).attr('y', y + 17).attr('height', 14).attr('rx', 3).attr('width', Math.max(2, x(v)))
+        .style('fill', dash.colors[missed ? 1 : 0])
+        .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev, el); tp.show([r.rule, `${AU.int(v)} alert kiểu A`, r.verdict], px, py); })
+        .on('pointerleave', () => tp.hide());
+      svg.append('text').attr('class', 'au-val').attr('x', Math.max(2, x(v)) + 6).attr('y', y + 24).attr('dy', '0.35em').text(AU.int(v));
+    });
+  });
+</script>
+
+<script>
+  // Dòng thời gian .biz
+  dash.draw('biz', (el) => {
+    const d = AU.ready(el, ['biz', 'bizmarks']); if (!d) return;
+    const sc = el.dataset.scenario;
+    const pts = d[0].filter((r) => r.scenario === sc).map((r) => ({ t: new Date(r.hour), v: AU.n(r.alerts) }));
+    const marks = d[1].filter((r) => r.scenario === sc).map((r) => ({ ev: r.event, a: new Date(r.start), b: new Date(r.end) }));
+    const h = 190, m = { t: 8, r: 8, b: 26 };
+    const { svg, w } = AU.svgIn(el, h, `Số alert .biz mỗi giờ, kịch bản ${sc}, kèm mốc xâm nhập và service_stop`);
+    const y = d3.scaleLinear([0, d3.max(pts, (p) => p.v) * 1.1], [h - m.b, m.t]).nice();
+    m.l = AU.textWidth(svg, y.ticks(4).map(AU.int)) + 8;
+    const x = d3.scaleUtc(d3.extent(pts, (p) => p.t), [m.l, w - m.r]);
+    svg.append('g').attr('class', 'au-axis au-gridl').attr('transform', `translate(${m.l},0)`)
+      .call(d3.axisLeft(y).ticks(4).tickSize(-(w - m.l - m.r)).tickFormat(AU.int));
+    svg.append('g').attr('class', 'au-axis').attr('transform', `translate(0,${h - m.b})`)
+      .call(d3.axisBottom(x).ticks(d3.utcDay.every(1)).tickFormat(d3.utcFormat('%d/%m')));
+    const color = { 'Chuỗi xâm nhập': 'var(--cds-chart-muted)', 'Khung dnsteal của time_label': 'var(--color-warn)' };
+    for (const mk of marks) {
+      if (mk.ev === 'service_stop') continue;
+      svg.append('rect').attr('x', x(mk.a)).attr('width', Math.max(3, x(mk.b) - x(mk.a))).attr('y', m.t).attr('height', h - m.b - m.t)
+        .style('fill', color[mk.ev]).style('opacity', 0.45);
+    }
+    const area = d3.area().x((p) => x(p.t)).y0(y(0)).y1((p) => y(p.v)).curve(d3.curveLinear);
+    const line = d3.line().x((p) => x(p.t)).y((p) => y(p.v)).curve(d3.curveLinear);
+    svg.append('path').datum(pts).attr('d', area).style('fill', dash.colors[0]).style('opacity', 0.15);
+    svg.append('path').datum(pts).attr('d', line).style('fill', 'none').style('stroke', dash.colors[0]).style('stroke-width', 2);
+    for (const mk of marks.filter((q) => q.ev === 'service_stop')) {
+      svg.append('line').attr('x1', x(mk.a)).attr('x2', x(mk.a)).attr('y1', m.t).attr('y2', h - m.b)
+        .style('stroke', 'var(--cds-chart-status-critical)').style('stroke-width', 2);
+    }
+    const tp = AU.tip(el);
+    const dot = svg.append('circle').attr('r', 4).style('fill', dash.colors[0]).style('stroke', 'var(--color-panel)').style('stroke-width', 2).attr('visibility', 'hidden');
+    const fmt = d3.utcFormat('%d/%m %H:00 UTC');
+    const bis = d3.bisector((p) => p.t).center;
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', h - m.b - m.t).style('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [px] = d3.pointer(ev); const p = pts[bis(pts, x.invert(px))];
+        dot.attr('cx', x(p.t)).attr('cy', y(p.v)).attr('visibility', 'visible');
+        const inMk = marks.filter((q) => p.t >= d3.utcHour.floor(q.a) && p.t <= q.b).map((q) => q.ev);
+        const [ex, ey] = d3.pointer(ev, el);
+        tp.show([fmt(p.t), `${AU.int(p.v)} alert .biz`, ...inMk], ex, ey);
+      })
+      .on('pointerleave', () => { dot.attr('visibility', 'hidden'); tp.hide(); });
+  });
+
+  // Nmap: có nhãn và bị bỏ sót
+  dash.draw('nmap', (el) => {
+    const d = AU.ready(el, ['stats']); if (!d) return;
+    const rows = d[0];
+    const bh = 18, gap = 10, top = 4, bottom = 24;
+    const { svg, w } = AU.svgIn(el, top + rows.length * (bh + gap) + bottom, 'Số alert Nmap có nhãn và bị gán dấu gạch theo kịch bản');
+    const lw = AU.textWidth(svg, rows.map((r) => r.scenario)) + 10;
+    const max = d3.max(rows, (r) => AU.n(r.nmap_labeled) + AU.n(r.nmap_unlabeled));
+    const vw = AU.textWidth(svg, [AU.int(max)]) + 8;
+    const x = d3.scaleLinear([0, max], [lw, w - vw]).nice();
+    svg.append('g').attr('class', 'au-axis au-gridl').attr('transform', `translate(0,${top + rows.length * (bh + gap)})`)
+      .call(d3.axisBottom(x).ticks(5).tickSize(-(rows.length * (bh + gap))).tickFormat(AU.int));
+    const tp = AU.tip(el);
+    rows.forEach((r, i) => {
+      const y = top + i * (bh + gap); const a = AU.n(r.nmap_labeled), b = AU.n(r.nmap_unlabeled);
+      svg.append('text').attr('class', 'au-lab').attr('x', 0).attr('y', y + bh / 2).attr('dy', '0.35em').text(r.scenario);
+      [[a, 0, 'có nhãn tấn công', x(0)], [b, 1, 'bị gán "-"', x(a)]].forEach(([v, j, lab, x0]) => {
+        if (!v) return;
+        svg.append('rect').attr('x', x0).attr('y', y).attr('height', bh).attr('width', Math.max(1, x(v) - x(0) - 2)).style('fill', dash.colors[j])
+          .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev, el); tp.show([r.scenario, `${AU.int(v)} alert Nmap ${lab}`], px, py); })
+          .on('pointerleave', () => tp.hide());
+      });
+      svg.append('text').attr('class', 'au-val').attr('x', x(a + b) + 6).attr('y', y + bh / 2).attr('dy', '0.35em')
+        .text(a + b ? `${AU.int(b)} bỏ sót` : 'không có');
+    });
+  });
+</script>
+
+<script>
+  // Cụm tấn công: trước và sau khi sửa nhãn Nmap
+  dash.draw('clusters', (el) => {
+    const d = AU.ready(el, ['stats']); if (!d) return;
+    const rows = d[0];
+    const rh = 26, top = 6, bottom = 24;
+    const { svg, w } = AU.svgIn(el, top + rows.length * rh + bottom, 'Số cụm tấn công mỗi kịch bản trước và sau khi sửa nhãn Nmap');
+    const lw = AU.textWidth(svg, rows.map((r) => r.scenario)) + 10;
+    const max = d3.max(rows, (r) => AU.n(r.attack_clusters_nmap_fixed));
+    const x = d3.scaleLinear([0, max], [lw, w - 40]).nice();
+    svg.append('g').attr('class', 'au-axis au-gridl').attr('transform', `translate(0,${top + rows.length * rh})`)
+      .call(d3.axisBottom(x).ticks(5).tickSize(-(rows.length * rh)).tickFormat(AU.int));
+    const tp = AU.tip(el);
+    rows.forEach((r, i) => {
+      const y = top + i * rh + rh / 2; const a = AU.n(r.attack_clusters), b = AU.n(r.attack_clusters_nmap_fixed);
+      svg.append('text').attr('class', 'au-lab').attr('x', 0).attr('y', y).attr('dy', '0.35em').text(r.scenario);
+      svg.append('line').attr('x1', x(a)).attr('x2', x(b)).attr('y1', y).attr('y2', y).style('stroke', 'var(--cds-chart-muted)').style('stroke-width', 2);
+      const g = svg.append('g')
+        .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev, el); tp.show([r.scenario, `Theo event_label gốc: ${AU.int(a)} cụm`, `Sau khi sửa nhãn Nmap: ${AU.int(b)} cụm`], px, py); })
+        .on('pointerleave', () => tp.hide());
+      g.append('rect').attr('x', lw).attr('y', y - rh / 2).attr('width', w - lw).attr('height', rh).style('fill', 'transparent');
+      [[a, 0], [b, 1]].forEach(([v, j]) => g.append('circle').attr('cx', x(v)).attr('cy', y).attr('r', 5)
+        .style('fill', dash.colors[j]).style('stroke', 'var(--color-panel)').style('stroke-width', 2));
+      svg.append('text').attr('class', 'au-val').attr('x', x(Math.max(a, b)) + 10).attr('y', y).attr('dy', '0.35em').text(AU.int(b));
+    });
+  });
+
+  // Các tổ hợp 3 kịch bản: chấm xếp chồng theo giá trị
+  dash.draw('combos', (el) => {
+    const d = AU.ready(el, ['combos']); if (!d) return;
+    const rows = d[0];
+    const series = [['attack_clusters', 'Theo event_label gốc', 0], ['attack_clusters_nmap_fixed', 'Sau khi sửa nhãn Nmap', 1]];
+    const r = 4, step = 9;
+    const stacks = series.map(([k]) => d3.rollup(rows, (v) => v.length, (q) => AU.n(q[k])));
+    const bandH = series.map((_, i) => (d3.max([...stacks[i].values()]) || 1) * step + 18);
+    const top = 18, bottom = 24, h = top + d3.sum(bandH) + bottom;
+    const { svg, w } = AU.svgIn(el, h, 'Tổng số cụm tấn công của từng tổ hợp 3 kịch bản so với mục tiêu');
+    const lo = Math.min(40, d3.min(rows, (q) => AU.n(q.attack_clusters)));
+    const x = d3.scaleLinear([lo, Math.max(AU.TARGET, d3.max(rows, (q) => AU.n(q.attack_clusters_nmap_fixed))) + 5], [8, w - 8]);
+    svg.append('g').attr('class', 'au-axis').attr('transform', `translate(0,${h - bottom})`).call(d3.axisBottom(x).ticks(6).tickFormat(AU.int));
+    svg.append('line').attr('x1', x(AU.TARGET)).attr('x2', x(AU.TARGET)).attr('y1', top - 4).attr('y2', h - bottom)
+      .style('stroke', 'var(--cds-chart-status-critical)').style('stroke-width', 2).style('stroke-dasharray', '4 3');
+    svg.append('text').attr('class', 'au-lab').attr('x', x(AU.TARGET) - 6).attr('y', top - 8).attr('text-anchor', 'end').text(`Mục tiêu ${AU.int(AU.TARGET)}`);
+    const tp = AU.tip(el);
+    let y0 = top;
+    series.forEach(([k, label, j], i) => {
+      svg.append('text').attr('class', 'au-lab').attr('x', 8).attr('y', y0 + 10).text(label);
+      const base = y0 + bandH[i] - 4; const seen = new Map();
+      [...rows].sort((a, b) => AU.n(a[k]) - AU.n(b[k])).forEach((q) => {
+        const v = AU.n(q[k]); const c = seen.get(v) || 0; seen.set(v, c + 1);
+        svg.append('circle').attr('cx', x(v)).attr('cy', base - r - c * step).attr('r', r).style('fill', dash.colors[j])
+          .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev, el); tp.show([q.combo, `${label}: ${AU.int(v)} cụm`], px, py); })
+          .on('pointerleave', () => tp.hide());
+      });
+      y0 += bandH[i];
+    });
+  });
+
+  // Độ nhạy theo định nghĩa cụm
+  dash.draw('defs', (el) => {
+    const d = AU.ready(el, ['defs']); if (!d) return;
+    const rows = d[0];
+    const rh = 40, top = 18, bottom = 24;
+    const { svg, w } = AU.svgIn(el, top + rows.length * rh + bottom, 'Khoảng số cụm tấn công của tổ hợp 3 kịch bản theo từng cách gom cụm');
+    const x = d3.scaleLinear([0, AU.TARGET + 5], [8, w - 30]);
+    svg.append('g').attr('class', 'au-axis au-gridl').attr('transform', `translate(0,${top + rows.length * rh})`)
+      .call(d3.axisBottom(x).ticks(5).tickSize(-(rows.length * rh)).tickFormat(AU.int));
+    svg.append('line').attr('x1', x(AU.TARGET)).attr('x2', x(AU.TARGET)).attr('y1', top - 4).attr('y2', top + rows.length * rh)
+      .style('stroke', 'var(--cds-chart-status-critical)').style('stroke-width', 2).style('stroke-dasharray', '4 3');
+    svg.append('text').attr('class', 'au-lab').attr('x', x(AU.TARGET) - 6).attr('y', top - 8).attr('text-anchor', 'end').text(`Mục tiêu ${AU.int(AU.TARGET)}`);
+    const tp = AU.tip(el);
+    rows.forEach((q, i) => {
+      const y = top + i * rh; const a = AU.n(q.combo_min), b = AU.n(q.combo_max);
+      svg.append('text').attr('class', 'au-lab').attr('x', 8).attr('y', y + 10).text(q.definition);
+      svg.append('rect').attr('x', x(a)).attr('y', y + 17).attr('height', 12).attr('rx', 3).attr('width', Math.max(3, x(b) - x(a)))
+        .style('fill', dash.colors[0])
+        .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev, el); tp.show([q.definition, `Ít nhất ${AU.int(a)}, nhiều nhất ${AU.int(b)} cụm`], px, py); })
+        .on('pointerleave', () => tp.hide());
+      svg.append('text').attr('class', 'au-val').attr('x', x(b) + 6).attr('y', y + 23).attr('dy', '0.35em').text(`${AU.int(a)}–${AU.int(b)}`);
+    });
+  });
+</script>
